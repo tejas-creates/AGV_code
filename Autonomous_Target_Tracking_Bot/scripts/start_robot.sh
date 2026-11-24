@@ -59,7 +59,7 @@ ros2 run v4l2_camera v4l2_camera_node --ros-args \
     -r /image_raw:=/AGV/camera/img \
     -r /camera_info:=/AGV/camera/camera_info \
     -p video_device:=/dev/video0 \
-    -p image_size:="[1280,720]" &
+    -p image_size:="[640,480]" &
 
 CAMERA_PID=$!
 
@@ -71,10 +71,9 @@ sleep 2
 
 echo "Starting YDLIDAR TG15..."
 
-ros2 launch ydlidar_ros2_driver ydlidar_launch.py \
-    --ros-args \
-    -r /scan:=/AGV/lidar/scan &
-
+ros2 run ydlidar_ros2_driver ydlidar_ros2_driver_node --ros-args \
+    --params-file /home/targetlock/targetlock_ws/src/ydlidar_ros2_ws/src/ydlidar_ros2_driver/params/TG.yaml \
+    -r scan:=/AGV/lidar/scan &
 LIDAR_PID=$!
 
 sleep 2

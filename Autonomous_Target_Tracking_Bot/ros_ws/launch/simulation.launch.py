@@ -20,22 +20,22 @@ def generate_launch_description():
 #    )
 
 
-camera = Node(
-    package='camera_module',
-    executable='camera_module',
-    name='camera_module',
-    output='screen',
-    parameters=[{
-        'use_sim_time': False,
-        'show_image': False,
-        'image_topic': '/AGV/camera/img',
-    }]
-)
+    camera = Node(
+        package='camera_module',
+        executable='camera_module',
+        name='camera_module',
+        output='screen',
+        parameters=[{
+            'use_sim_time': False,
+            'show_image': False,
+            'image_topic': '/AGV/camera/img',
+        }]
+    )
 
     lidar = Node(
         package='lidar',
         executable='obstacle_detector',
-        parameters=[{'use_sim_time': True}],
+        parameters=[{'use_sim_time': False}],
         output='screen',
     )
 
@@ -47,7 +47,7 @@ camera = Node(
         executable='nmpc_controller',
         prefix=str(venv_python),
         parameters=[str(Path(__file__).resolve().parents[1] / 'config/nmpc.yaml'),
-                    {'use_sim_time': True}],
+                    {'use_sim_time': False}],
         output='screen',
     )
 
